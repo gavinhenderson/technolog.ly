@@ -8,10 +8,12 @@ const listOfPackages = [
   'react',
 ];
 
-const { getLogoFromPackageName } = require('./src');
+const { getLogoLinkFromPackageName, getCompositeImage } = require('./src');
+const fs = require('fs');
+const path = require('path');
 
-listOfPackages.forEach((current) => {
-  getLogoFromPackageName(current).then((currentImages) => {
-    console.log(current, currentImages[0]);
-  });
-});
+(async () => {
+  const image = await getCompositeImage(listOfPackages);
+
+  fs.writeFileSync(path.join(__dirname, 'test'), image);
+})();
