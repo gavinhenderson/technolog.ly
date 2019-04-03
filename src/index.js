@@ -26,9 +26,21 @@ async function getCompositeImage(listOfPackages) {
     }),
   );
 
-  images.forEach((current, index) => {
-    fs.writeFileSync(path.join(__dirname, 'test-' + index), current);
-  });
+  const imageObjects = images.map((current) => ({
+    input: current,
+  }));
+
+  return await sharp({
+    create: {
+      width: 1000,
+      height: 1000,
+      channels: 4,
+      background: { r: 255, g: 0, b: 0, alpha: 0.5 },
+    },
+  })
+    .composite(imageObjects)
+    .png()
+    .toBuffer();
 }
 
 module.exports = { getLogoLinkFromPackageName, getCompositeImage };
