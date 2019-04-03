@@ -1,3 +1,14 @@
-function getLogo() {}
+const imagefinder = require('imagefinder');
 
-module.exports = { getLogo };
+async function getLogoFromPackageName(packageName) {
+  try {
+    const images = await imagefinder({
+      keyword: `${packageName} logo`,
+    });
+    return images;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = { getLogoFromPackageName };

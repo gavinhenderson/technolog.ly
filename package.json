@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/gavinhenderson/technolog.ly/issues"
   },
-  "homepage": "https://github.com/gavinhenderson/technolog.ly#readme"
+  "homepage": "https://github.com/gavinhenderson/technolog.ly#readme",
+  "dependencies": {
+    "imagefinder": "^0.1.3"
+  }
 }
