@@ -26,12 +26,7 @@ async function getCompositeImage(listOfPackages) {
     }),
   );
 
-  const imageObjects = images.map((current) => ({
-    input: current.buffer,
-    gravity: 'south',
-  }));
-
-  const composite = await new CompositeImage(imageObjects, {});
+  const composite = await new CompositeImage(images, {});
 
   return await composite.buffer();
 }
