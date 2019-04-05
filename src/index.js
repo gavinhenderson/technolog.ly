@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const Image = require('./image');
+const CompositeImage = require('./composite-image');
 
 async function getLogoLinkFromPackageName(packageName) {
   const images = await imagefinder({
@@ -19,11 +20,9 @@ async function getCompositeImage(listOfPackages) {
   await Promise.all(
     listOfPackages.map(async (currentPackage) => {
       const imageURL = await getLogoLinkFromPackageName(currentPackage);
+      const currentImage = await new Image(imageURL);
 
-      const imageRes = await fetch(imageURL);
-      const imageBuffer = await imageRes.buffer();
-
-      images.push(await new Image(imageBuffer));
+      images.push(currentImage);
     }),
   );
 
@@ -32,17 +31,9 @@ async function getCompositeImage(listOfPackages) {
     gravity: 'south',
   }));
 
-  return await sharp({
-    create: {
-      width: 1000,
-      height: 1000,
-      channels: 4,
-      background: { r: 255, g: 0, b: 0, alpha: 0.5 },
-    },
-  })
-    .composite(imageObjects)
-    .png()
-    .toBuffer();
+  const composite = await new CompositeImage(imageObjects, {});
+
+  return await composite.buffer();
 }
 
 module.exports = { getLogoLinkFromPackageName, getCompositeImage };
