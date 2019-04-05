@@ -3,6 +3,7 @@ const sharp = require('sharp');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
+const Image = require('./image');
 
 async function getLogoLinkFromPackageName(packageName) {
   const images = await imagefinder({
@@ -22,12 +23,13 @@ async function getCompositeImage(listOfPackages) {
       const imageRes = await fetch(imageURL);
       const imageBuffer = await imageRes.buffer();
 
-      images.push(imageBuffer);
+      images.push(await new Image(imageBuffer));
     }),
   );
 
   const imageObjects = images.map((current) => ({
-    input: current,
+    input: current.buffer,
+    gravity: 'south',
   }));
 
   return await sharp({
