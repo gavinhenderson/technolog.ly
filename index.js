@@ -14,6 +14,5 @@ const path = require('path');
 
 (async () => {
   const image = await getCompositeImage(listOfPackages);
-
-  fs.writeFileSync(path.join(__dirname, 'test.png'), image);
+  image.write('out.png', () => console.log('done'));
 })();

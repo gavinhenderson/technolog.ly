@@ -5,7 +5,7 @@ class CompositeImage {
     return (async () => {
       this.cols = ops.columns || 5;
       this.images = images;
-      await this.normaliseImages();
+      // await this.normaliseImages();
 
       this.rows = [];
 
@@ -21,7 +21,8 @@ class CompositeImage {
 
       const imageObjects = images.map((current) => ({
         input: current.buffer,
-        gravity: 'south',
+        top: 0,
+        left: 0,
       }));
 
       this.sharp = await sharp({

@@ -19,6 +19,7 @@
   "dependencies": {
     "bluebird": "^3.5.4",
     "imagefinder": "^0.1.3",
+    "merge-img": "^2.1.3",
     "node-fetch": "^2.3.0",
     "sharp": "^0.22.0"
   }

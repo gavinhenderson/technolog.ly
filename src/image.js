@@ -11,8 +11,8 @@ class Image {
       const imageRes = await fetch(imageURL);
 
       this.buffer = await imageRes.buffer();
-      this.sharp = await sharp(this.buffer);
-      await this.setMetaData();
+      // this.sharp = await sharp(this.buffer);
+      // await this.setMetaData();
 
       return this;
     })();
@@ -27,19 +27,11 @@ class Image {
       resizeOps.height = height;
     }
 
-    console.log('height', this.height);
-    console.log('width', this.width);
-    console.log('url', this.url);
-    console.log(resizeOps);
+    const oldmetadata = JSON.parse(JSON.stringify(this.metadata));
 
-    await this.sharp.resize({ height });
+    // await this.sharp.resize({ height });
+    this.buffer = await this.sharp.toBuffer();
     await this.setMetaData();
-
-    console.log(await this.sharp.toBuffer());
-
-    console.log('height', this.height);
-    console.log('width', this.width);
-    console.log();
   }
 
   async setMetaData() {
