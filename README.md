@@ -2,6 +2,8 @@
 
 > Get an obnoxious image that display the logos of all the packages in your package.json
 
+![Example](/example.png)
+
 ## Installation
 
 To install run:
