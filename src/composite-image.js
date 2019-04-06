@@ -1,4 +1,5 @@
 const mergeImg = require('merge-img');
+const Jimp = require('jimp');
 
 class CompositeImage {
   constructor(images, ops = {}) {
@@ -9,7 +10,7 @@ class CompositeImage {
 
       this.rows = [];
 
-      for (let i = 0; i <= Math.floor(images.length / this.cols); i++) {
+      for (let i = 0; i < Math.ceil(images.length / this.cols); i++) {
         this.rows.push([]);
       }
 
@@ -36,15 +37,20 @@ class CompositeImage {
         const buffers = await Promise.all(
           currentRow.map(async (current) => await current.getBuffer()),
         );
+
         return await mergeImg(buffers, { align: 'center', offset: 10 });
       }),
     );
 
-    return await mergeImg(rows, {
+    if (rows.length === 1) return rows[0];
+
+    const mergedImg = await mergeImg(rows, {
       direction: true,
       align: 'center',
       offset: 10,
     });
+
+    return await mergedImg;
   }
 }
 
