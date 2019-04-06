@@ -2,9 +2,11 @@ module.exports = async () => {
   const imagefinder = await require('./imagefinder')();
   const Image = require('./image');
   const CompositeImage = require('./composite-image');
-  const mergeImg = require('merge-img');
+  const logoLinks = require('./logo.json');
 
   async function getLogoLinkFromPackageName(packageName) {
+    if (logoLinks[packageName]) return logoLinks[packageName];
+
     const images = await imagefinder.search({
       keyword: `${packageName} logo`,
     });
