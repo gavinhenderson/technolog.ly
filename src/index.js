@@ -1,8 +1,4 @@
 const imagefinder = require('imagefinder');
-const sharp = require('sharp');
-const fetch = require('node-fetch');
-const fs = require('fs');
-const path = require('path');
 const Image = require('./image');
 const CompositeImage = require('./composite-image');
 const mergeImg = require('merge-img');
@@ -13,7 +9,11 @@ async function getLogoLinkFromPackageName(packageName) {
   });
 
   for (let i = 0; i < images.length; i++) {
-    if (!images[i].toLowerCase().endsWith('.svg')) return images[i];
+    if (
+      images[i].toLowerCase().endsWith('.png') ||
+      images[i].toLowerCase().endsWith('.jpg')
+    )
+      return images[i];
   }
 }
 
@@ -26,11 +26,19 @@ async function getCompositeImage(listOfPackages) {
 
       const currentImage = await new Image(imageURL);
 
-      images.push(currentImage.buffer);
+      images.push(currentImage);
     }),
   );
 
-  return await mergeImg(images);
+  const composite = await new CompositeImage(images);
+
+  return await composite.getCompositeImage();
+
+  const buffers = await Promise.all(
+    images.map(async (current) => await current.getBuffer()),
+  );
+
+  return await mergeImg(buffers, { direction: true });
 }
 
 module.exports = { getLogoLinkFromPackageName, getCompositeImage };
