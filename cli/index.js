@@ -12,6 +12,6 @@
   const deps = Object.keys(package.dependencies);
 
   getCompositeImage(deps).then((image) => {
-    image.write('out.png', () => console.log('done'));
+    image.write('out.png', () => console.log(`Image saved to 'out.png'`));
   });
 })();
