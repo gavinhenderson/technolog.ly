@@ -21,7 +21,7 @@ module.exports = async () => {
   }
 
   return {
-    getCompositeImage: async function(listOfPackages) {
+    getCompositeImage: async function(listOfPackages, columns) {
       const images = [];
 
       for (let i = 0; i < listOfPackages.length; i++) {
@@ -36,7 +36,7 @@ module.exports = async () => {
       }
 
       imagefinder.close();
-      const composite = await new CompositeImage(images);
+      const composite = await new CompositeImage(images, { columns });
 
       return await composite.getCompositeImage();
     },

@@ -22,7 +22,8 @@ $ technolog.ly --help
 Usage: technolog.ly [options]
 
 Options:
-  -V, --version        output the version number
-  -o, --output [file]  Specify the output file to save the image to. Default: out.png
-  -h, --help           output usage information
+  -V, --version                      output the version number
+  -o, --output [file]                Specify the output file to save the image to. Default: out.png
+  -c, --columns [number of columns]  Enter the number of logos you would like per row. Default: 5
+  -h, --help                         output usage information
 ```
