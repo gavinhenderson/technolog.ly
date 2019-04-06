@@ -22,15 +22,16 @@ module.exports = async () => {
     getCompositeImage: async function(listOfPackages) {
       const images = [];
 
-      await Promise.all(
-        listOfPackages.map(async (currentPackage) => {
-          const imageURL = await getLogoLinkFromPackageName(currentPackage);
+      for (let i = 0; i < listOfPackages.length; i++) {
+        const currentPackage = listOfPackages[i];
 
-          const currentImage = await new Image(imageURL);
+        console.log(`Fetching the logo for '${currentPackage}'`);
+        const imageURL = await getLogoLinkFromPackageName(currentPackage);
 
-          images.push(currentImage);
-        }),
-      );
+        const currentImage = await new Image(imageURL);
+
+        images.push(currentImage);
+      }
 
       imagefinder.close();
       const composite = await new CompositeImage(images);
